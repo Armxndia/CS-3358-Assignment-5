@@ -57,27 +57,65 @@ void Graph::addEdge(int src, int tar) {
 }
 
 void Graph::BFTraversal() {
-// TO DO
-// You are expected to call BFS() in this function,
-// potentially multiple times in loops.
+	bool* marked = new bool[vertexCount];
+    for (int i = 0; i < vertexCount; i++) {
+        marked[i] = false;
+    }
+
+    for (int i = 0; i < vertexCount; i++) {
+        if (!marked[i]) {
+            BFS(i, marked);
+        }
+    }
+    delete[] marked;
+    cout << endl;
 }
 
 void Graph::BFS(int n, bool marked[]) {
-// TO DO
-// You are expected to use a queue<int> from C++ STL.
-// This function is not recursive, and you are expected to use a while loop.
+	queue<int> q;
+    marked[n] = true;
+    q.push(n);
+
+    while (!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        cout << curr << " ";
+
+        //Check Adjacent Vertices
+        for (int j = 0; j < vertexCount; j++) {
+            if (adjMat[curr][j] && !marked[j]) {
+                marked[j] = true;
+                q.push(j);
+            }
+        }
+    }
 }
 
 void Graph::DFTraversal() {
-// TO DO
-// You are expected to call DFS() in this function,
-// potentially multiple times in loops.
+	bool* marked = new bool[vertexCount];
+    for (int i = 0; i < vertexCount; i++) {
+        marked[i] = false;
+    }
+
+    for (int i = 0; i < vertexCount; i++) {
+        if (!marked[i]) {
+            DFS(i, marked);
+        }
+    }
+    delete[] marked;
+    cout << endl;
 }
 
 void Graph::DFS(int n, bool marked[]) {
-// TO DO
-// You are asked to implement this function using recursion.
-// However, a for loop is expected --- the recursive calls are within the loop.
+	marked[n] = true;
+    cout << n << " ";
+
+    //Check adjacent and unvisited vertices
+    for (int j = 0; j < vertexCount; j++) {
+        if (adjMat[n][j] && !marked[j]) {
+            DFS(j, marked);
+        }
+    }
 }
 
 void Graph::printVertices() {
